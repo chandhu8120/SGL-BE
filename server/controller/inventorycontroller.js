@@ -1,0 +1,37 @@
+// InventoryController.js
+import Inventory from "../models/InventoryModel.js";
+
+export const addItem = async (req, res) => {
+  try {
+    const newItem = new Inventory(req.body);
+    await newItem.save();
+    res.status(201).json(newItem);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const getInventory = async (req, res) => {
+  try {
+    const inventory = await Inventory.find();
+    res.status(200).json(inventory);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+export const deleteItem = async (req, res) => {
+  try {
+    const { itemId } = req.params;
+    await Inventory.findByIdAndDelete(itemId);
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+// Export specific names
+export default {
+  addItem,
+  getInventory,
+  deleteItem,
+};
