@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import { sendMessage } from "fast-two-sms";
 import Admin from "../models/admin.js";
-
+import AdminLoginHistory from "../models/adminLoginHistory.js";
 // Creating a secret key for JWT
-const secret = "some-secret-key";
+const secret = "jobminar";
 const { sign, verify } = jwt;
 const { findOne, findById } = Admin;
 // Creating a function to generate a random 6-digit OTP
@@ -35,17 +35,21 @@ const registerAdmin = async (req, res) => {
     }
 
     // Check if the admin already exists
-    const admin = await findOne({ phone });
+    const admin = await Admin.findOne({ phone });
     if (admin) {
-      return res.status(400).json({ message: "admin already exists" });
+      return res.status(400).json({ message: "Admin already exists" });
     }
 
     // Create a new admin and save to the database
     const newAdmin = new Admin({ phone, name });
     await newAdmin.save();
 
+    // Create a login history record for the new admin
+    const loginHistory = new AdminLoginHistory({ admin: newAdmin._id });
+    await loginHistory.save();
+
     // Sending a success response
-    res.status(201).json({ message: "admin registered successfully" });
+    res.status(201).json({ message: "Admin registered successfully" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Something went wrong" });
@@ -63,9 +67,9 @@ const loginAdmin = async (req, res) => {
     }
 
     // Find the admin by phone number
-    const admin = await findOne({ phone });
+    const admin = await Admin.findOne({ phone });
     if (!admin) {
-      return res.status(404).json({ message: "admin not found" });
+      return res.status(404).json({ message: "Admin not found" });
     }
 
     // Generate a random OTP
@@ -78,6 +82,11 @@ const loginAdmin = async (req, res) => {
     // Update the admin's OTP and expiration time in the database
     admin.otp = otp;
     admin.otpExpire = Date.now() + 300000; // OTP expires in 5 minutes
+
+    // Add the login history reference
+    const loginHistory = new AdminLoginHistory({ admin: admin._id });
+    await loginHistory.save();
+
     await admin.save();
 
     // Send a success response with the admin's id
@@ -87,7 +96,6 @@ const loginAdmin = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
-
 // Verify OTP controller
 const verifyOTP = async (req, res) => {
   try {

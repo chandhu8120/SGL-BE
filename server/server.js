@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(json());
-app.use("/sgl", routes);
+app.use("/", routes);
 
 const startServer = async () => {
   await connectToMongoDB();

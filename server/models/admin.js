@@ -1,5 +1,5 @@
-// models/admin.js
 import mongoose from "mongoose";
+import AdminLoginHistory from "./adminLoginHistory.js";
 
 // Create a admin schema
 const adminSchema = new mongoose.Schema({
@@ -18,6 +18,12 @@ const adminSchema = new mongoose.Schema({
   otpExpire: {
     type: Date,
   },
+  loginHistory: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "AdminLoginHistory",
+    },
+  ],
 });
 
 // Create a admin model

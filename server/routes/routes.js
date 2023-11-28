@@ -1,21 +1,22 @@
 import express from "express";
-import controller from "../controller/controller.js";
+import controller from "../controller/admincontroller.js";
 import blogController from "../controller/blogcontroller.js";
 import inventorycontroller from "../controller/inventorycontroller.js";
 import ordercontroller from "../controller/ordercontroller.js";
+import userController from "../controller/usercontroller.js";
 
 const router = express.Router();
 
-// User registration route
+// Admin registration route
 router.post("/register", controller.registerAdmin);
 
-// User login route
+// Admin login route
 router.post("/login", controller.loginAdmin);
 
 // Verify OTP route
 router.post("/verify", controller.verifyOTP);
 
-// User profile route
+// Admin profile route
 router.get("/profile", controller.getadminProfile);
 
 // Get all blogs________________________________________________________________________________
@@ -44,5 +45,14 @@ router.put("/orders/:orderId/update-status", ordercontroller.updateOrderStatus);
 router.delete("/orders/:orderId/cancel", ordercontroller.cancelOrder);
 //update an order
 router.put("/orders/:orderId/refund", ordercontroller.refundOrder);
+
+//add a user
+router.post("/register", userController.registerUser);
+//logging in a user
+router.post("/login", userController.loginUser);
+//verify the user
+router.post("/verify", userController.verifyUserOTP);
+//get the user profile
+router.get("/profile", userController.getUserProfile);
 
 export default router;
