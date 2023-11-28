@@ -54,7 +54,28 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Phone is required" });
     }
 
+    // Check if the user is also an admin
+    const admin = await admin.findOne({ phone });
+
+    if (admin) {
+      // If the user is also an admin, perform admin login logic
+      // (You can customize this part based on your admin login logic)
+      const adminOtp = generateOTP();
+      const adminResponse = await sendOTP(phone, adminOtp);
+      console.log(adminResponse);
+
+      admin.otp = adminOtp;
+      admin.otpExpire = Date.now() + 300000; // OTP expires in 5 minutes
+      await admin.save();
+
+      return res
+        .status(200)
+        .json({ message: "OTP sent for admin login", adminId: admin.id });
+    }
+
+    // If the user is not an admin, proceed with regular user login logic
     const user = await User.findOne({ phone });
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

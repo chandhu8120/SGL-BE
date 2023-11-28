@@ -10,18 +10,26 @@ const { findOne, findById } = Admin;
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
+//OTP generation
+const sendOTP = async (phone) => {
+  try {
+    // Generate a random 6-digit OTP
+    const otp = generateOTP();
 
-// Creating a function to send OTP via SMS using fast-two-sms package
-const sendOTP = async (phone, otp) => {
-  // Replace with your own API key from https://www.fast2sms.com/
-  const apiKey = "your-api-key";
-  const message = `Your OTP for login is ${otp}`;
-  const response = await sendMessage({
-    authorization: apiKey,
-    message: message,
-    numbers: [phone],
-  });
-  return response;
+    // Save the OTP and expiration time in the database
+    const admin = await Admin.findOne({ phone });
+    if (admin) {
+      admin.otp = otp;
+      admin.otpExpire = Date.now() + 300000; // OTP expires in 5 minutes
+      await admin.save();
+    }
+
+    // Return the generated OTP for testing purposes
+    return otp;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error generating OTP");
+  }
 };
 
 // admin registration controller
@@ -30,14 +38,21 @@ const registerAdmin = async (req, res) => {
     const { phone, name } = req.body;
 
     // Validate input
-    if (!phone || !name) {
-      return res.status(400).json({ message: "Phone and name are required" });
+    if (!phone) {
+      return res.status(400).json({ message: "Phone is required" });
     }
 
     // Check if the admin already exists
     const admin = await Admin.findOne({ phone });
     if (admin) {
       return res.status(400).json({ message: "Admin already exists" });
+    }
+
+    // Ensure that the name is "sgldiamonds"
+    if (name !== "sgldiamonds") {
+      return res
+        .status(400)
+        .json({ message: "Invalid name. Name must be 'sgldiamonds'" });
     }
 
     // Create a new admin and save to the database
@@ -57,6 +72,7 @@ const registerAdmin = async (req, res) => {
 };
 
 // admin login controller
+
 const loginAdmin = async (req, res) => {
   try {
     const { phone } = req.body;
@@ -72,22 +88,11 @@ const loginAdmin = async (req, res) => {
       return res.status(404).json({ message: "Admin not found" });
     }
 
-    // Generate a random OTP
-    const otp = generateOTP();
+    // Send the OTP and get the generated OTP for testing
+    const generatedOTP = await sendOTP(phone);
 
-    // Send the OTP via SMS
-    const response = await sendOTP(phone, otp);
-    console.log(response);
-
-    // Update the admin's OTP and expiration time in the database
-    admin.otp = otp;
-    admin.otpExpire = Date.now() + 300000; // OTP expires in 5 minutes
-
-    // Add the login history reference
-    const loginHistory = new AdminLoginHistory({ admin: admin._id });
-    await loginHistory.save();
-
-    await admin.save();
+    // Log the generated OTP for testing purposes
+    console.log("Generated OTP:", generatedOTP);
 
     // Send a success response with the admin's id
     res.status(200).json({ message: "OTP sent", adminId: admin.id });
@@ -96,6 +101,7 @@ const loginAdmin = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+
 // Verify OTP controller
 const verifyOTP = async (req, res) => {
   try {
@@ -106,8 +112,8 @@ const verifyOTP = async (req, res) => {
       return res.status(400).json({ message: "admin id and OTP are required" });
     }
 
-    // Find the admin by id
-    const admin = await findById(adminId);
+    // Find the admin by id using the Admin model
+    const admin = await Admin.findById(adminId);
     if (!admin) {
       return res.status(404).json({ message: "admin not found" });
     }
