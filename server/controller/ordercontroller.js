@@ -1,5 +1,31 @@
-// OrderController.js
+
 import Order from "../models/OrderModel.js";
+
+
+const addOrder = async (req, res) => {
+  try {
+    const { username, items, orderID, date, status, address } = req.body;
+
+    // Create a new order
+    const newOrder = new Order({
+      username,
+      items,
+      orderID,
+      date,
+      status,
+      address,
+    });
+
+    // Save the new order to the database
+    const savedOrder = await newOrder.save();
+
+    res.status(201).json(savedOrder);
+    console.log("ordered....")
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 const getAllOrders = async (req, res) => {
   try {
@@ -49,6 +75,7 @@ const refundOrder = async (req, res) => {
 };
 
 export default {
+  addOrder,
   getAllOrders,
   updateOrderStatus,
   cancelOrder,

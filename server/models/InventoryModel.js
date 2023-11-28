@@ -1,16 +1,15 @@
 // InventoryModel.js
 import { Schema, model } from "mongoose";
-
 const inventorySchema = new Schema({
   type: String,
   subtype: String,
   name: String,
   weight: String,
   shape: String,
-  price: String,
+  price: Number,
   color: String,
   value: String,
-  image: String,
+  image:Buffer,
 });
 
 const Inventory = model("Inventory", inventorySchema);

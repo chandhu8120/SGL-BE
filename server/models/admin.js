@@ -4,7 +4,7 @@ import AdminLoginHistory from "./adminLoginHistory.js";
 // Create a admin schema
 const adminSchema = new mongoose.Schema({
   phone: {
-    type: String,
+    type: Number,
     required: true,
     unique: true,
   },

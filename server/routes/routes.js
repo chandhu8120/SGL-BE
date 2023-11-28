@@ -1,7 +1,6 @@
 import express from "express";
 import controller from "../controller/admincontroller.js";
 import blogController from "../controller/blogcontroller.js";
-import inventorycontroller from "../controller/inventorycontroller.js";
 import ordercontroller from "../controller/ordercontroller.js";
 import userController from "../controller/usercontroller.js";
 import inventorycontroller from "../controller/inventorycontroller.js";
@@ -37,6 +36,8 @@ router.post("/add", inventorycontroller.addItem);
 router.get("/get", inventorycontroller.getInventory);
 //Delete a new Inventory  item
 router.delete("/delete/:itemId", inventorycontroller.deleteItem);
+
+router.post("/orders", ordercontroller.addOrder);
 //get a new  order ___________________________________________________________
 router.get("/orders", ordercontroller.getAllOrders);
 //update an order status

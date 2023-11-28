@@ -1,3 +1,4 @@
+
 import jwt from "jsonwebtoken";
 import { sendMessage } from "fast-two-sms";
 import Admin from "../models/admin.js";
@@ -6,6 +7,7 @@ import AdminLoginHistory from "../models/adminLoginHistory.js";
 const secret = "jobminar";
 const { sign, verify } = jwt;
 const { findOne, findById } = Admin;
+
 // Creating a function to generate a random 6-digit OTP
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000);
@@ -28,8 +30,6 @@ const sendOTP = async (phone, otp) => {
 const registerAdmin = async (req, res) => {
   try {
     const { phone, name } = req.body;
-
-    // Validate input
     if (!phone || !name) {
       return res.status(400).json({ message: "Phone and name are required" });
     }

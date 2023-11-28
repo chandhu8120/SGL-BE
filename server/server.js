@@ -6,13 +6,23 @@ import dotenv from "dotenv";
 import { Server } from "http";
 
 dotenv.config();
-
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 const app = express();
 
 app.use(json());
+
+app.use(express.json());
 app.use("/", routes);
+app.use((req, res, next) => {
+  console.log("Request Body:", req.body);
+  next();
+});
+
+
+app.get("/",(req,res)=>{
+  res.send("Hello page")
+})
 
 let server;
 
