@@ -4,10 +4,10 @@ import blogController from "../controller/blogcontroller.js";
 import inventorycontroller from "../controller/inventorycontroller.js";
 import ordercontroller from "../controller/ordercontroller.js";
 import userController from "../controller/usercontroller.js";
-
+import inventorycontroller from "../controller/inventorycontroller.js";
 const router = express.Router();
 
-// Admin registration route
+// Admin registration route________________________________
 router.post("/register", controller.registerAdmin);
 
 // Admin login route
@@ -46,7 +46,7 @@ router.delete("/orders/:orderId/cancel", ordercontroller.cancelOrder);
 //update an order
 router.put("/orders/:orderId/refund", ordercontroller.refundOrder);
 
-//add a user
+//add a user_____________________________________________________
 router.post("/register", userController.registerUser);
 //logging in a user
 router.post("/login", userController.loginUser);
@@ -54,5 +54,11 @@ router.post("/login", userController.loginUser);
 router.post("/verify", userController.verifyUserOTP);
 //get the user profile
 router.get("/profile", userController.getUserProfile);
+//add inventory__________________________________________________
+router.post("/add-item", inventorycontroller.addItem);
+//get inventory items
+router.get("/get-inventory", inventorycontroller.getInventory);
+//delete inventory items
+router.delete("/delete-item/:itemId", inventorycontroller.deleteItem);
 
 export default router;
