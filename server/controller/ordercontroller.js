@@ -6,14 +6,14 @@ const addOrder = async (req, res) => {
   try {
     const { username, items, orderID, date, status, address } = req.body;
 
-    // Create a new order
+    // Create a new order hii
     const newOrder = new Order({
       username,
       items,
       orderID,
       date,
       status,
-      address,
+      address
     });
 
     // Save the new order to the database
