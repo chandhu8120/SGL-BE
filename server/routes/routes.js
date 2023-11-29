@@ -40,7 +40,7 @@ router.delete("/delete/:itemId", inventorycontroller.deleteItem);
 
 router.post("/orderPost", ordercontroller.addOrder);
 //get a new  order ___________________________________________________________
-router.get("/orderGet", ordercontroller.getAllOrders);
+router.get("/ordergetall", ordercontroller.getAllOrders);
 //update an order status
 router.put("/orders/:orderId/update-status", ordercontroller.updateOrderStatus);
 //delete an order
@@ -59,7 +59,7 @@ router.get("/userprofile", userController.getUserProfile);
 //add inventory__________________________________________________
 router.post("/addItem", inventorycontroller.addItem);
 //get inventory items
-router.get("/getItem", inventorycontroller.getInventory);
+router.get("/getallItems", inventorycontroller.getInventory);
 //delete inventory items
 router.delete("/delete-item/:itemId", inventorycontroller.deleteItem);
 
