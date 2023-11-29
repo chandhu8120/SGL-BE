@@ -38,15 +38,10 @@ const sendOTP = async (phone) => {
 const registerAdmin = async (req, res) => {
   try {
     const { phone, name } = req.body;
-<<<<<<< HEAD
-    if (!phone || !name) {
-      return res.status(400).json({ message: "Phone and name are required" });
-=======
 
     // Validate input
     if (!phone) {
       return res.status(400).json({ message: "Phone is required" });
->>>>>>> 6c4e6cf6fd163d845511fc6f37f32407e8dc4c1c
     }
 
     // Check if the admin already exists

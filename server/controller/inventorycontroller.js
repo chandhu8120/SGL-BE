@@ -27,6 +27,7 @@ export const deleteItem = async (req, res) => {
     const { itemId } = req.params;
     await Inventory.findByIdAndDelete(itemId);
     res.status(204).send();
+    console.log("deleted item")
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

@@ -3,6 +3,7 @@ import controller from "../controller/admincontroller.js";
 import blogController from "../controller/blogcontroller.js";
 import ordercontroller from "../controller/ordercontroller.js";
 import userController from "../controller/usercontroller.js";
+import inventorycontroller from "../controller/inventorycontroller.js"
 
 const router = express.Router();
 
@@ -13,16 +14,16 @@ router.post("/register", controller.registerAdmin);
 router.post("/login", controller.loginAdmin);
 
 // Verify OTP route
-router.post("/verify", controller.verifyOTP);
+router.post("/verifyotp", controller.verifyOTP);
 
 // Admin profile route
-router.get("/profile", controller.getadminProfile);
+router.get("/adminprofile", controller.getadminProfile);
 
 // Get all blogs________________________________________________________________________________
-router.get("/blogs", blogController.getAllBlogs);
+router.get("/blogsget", blogController.getAllBlogs);
 
 // Add a new blog
-router.post("/blogs", blogController.addBlog);
+router.post("/blogspost", blogController.addBlog);
 
 // Update a blog
 router.put("/blogs/:id", blogController.updateBlog);
@@ -31,15 +32,15 @@ router.put("/blogs/:id", blogController.updateBlog);
 router.delete("/blogs/:id", blogController.deleteBlog);
 
 //Add a new Inventory  item_____________________________________________________
-router.post("/add", inventorycontroller.addItem);
+// router.post("/add", inventorycontroller.addItem);
 //get a new Inventory  item
-router.get("/get", inventorycontroller.getInventory);
+// router.get("/get", inventorycontroller.getInventory);
 //Delete a new Inventory  item
 router.delete("/delete/:itemId", inventorycontroller.deleteItem);
 
-router.post("/orders", ordercontroller.addOrder);
+router.post("/orderPost", ordercontroller.addOrder);
 //get a new  order ___________________________________________________________
-router.get("/orders", ordercontroller.getAllOrders);
+router.get("/orderGet", ordercontroller.getAllOrders);
 //update an order status
 router.put("/orders/:orderId/update-status", ordercontroller.updateOrderStatus);
 //delete an order
@@ -48,17 +49,17 @@ router.delete("/orders/:orderId/cancel", ordercontroller.cancelOrder);
 router.put("/orders/:orderId/refund", ordercontroller.refundOrder);
 
 //add a user_____________________________________________________
-router.post("/userregister", userController.registerUser);
+router.post("/userRegister", userController.registerUser);
 //logging in a user
-router.post("/userlogin", userController.loginUser);
+router.post("/userLogin", userController.loginUser);
 //verify the user
-router.post("/userverify", userController.verifyUserOTP);
+router.post("/userVerify", userController.verifyUserOTP);
 //get the user profile
 router.get("/userprofile", userController.getUserProfile);
 //add inventory__________________________________________________
-router.post("/add-item", inventorycontroller.addItem);
+router.post("/addItem", inventorycontroller.addItem);
 //get inventory items
-router.get("/get-inventory", inventorycontroller.getInventory);
+router.get("/getItem", inventorycontroller.getInventory);
 //delete inventory items
 router.delete("/delete-item/:itemId", inventorycontroller.deleteItem);
 
