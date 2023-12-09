@@ -14,12 +14,17 @@ import blogsController from './controller/blogsController.js';
 const router = express.Router();
 router.post("/inventorypost", inventoryController.createInventoryItem);
 router.get("/inventoryget", inventoryController.getAllInventoryItems);
+router.delete("/deleteinventory/:id",inventoryController.deleteInventoryItem)
 
 router.post("/postblogs", blogsController.createBlog);
 router.get("/getblogs", blogsController.getAllBlogs);
 
-router.post("/postorders",ordersController.createOrder)
-router.get("/getorders",ordersController.getAllOrders)
+router.post("/postorders", ordersController.createOrder);
+router.get("/getorders", ordersController.getAllOrders);
+router.put("/edit/:orderId", ordersController.editOrder);
+router.delete("/deleteorder/:id", ordersController.deleteOrder); 
+router.put("/updateorder", ordersController.updateOrder);
+
 
 router.post("/postgems",gemsController.createGem)
 router.get("/getgems",gemsController.getAllGems)
