@@ -9,7 +9,7 @@ import coralsController from './controller/coralsController.js';
 import cartsController from './controller/cartsController.js';
 import beadsController from './controller/beadsController.js';
 import blogsController from './controller/blogsController.js';
-
+import checkoutController from './controller/CheckoutController.js';
 
 const router = express.Router();
 router.post("/inventorypost", inventoryController.createInventoryItem);
@@ -30,7 +30,7 @@ router.post("/postgems",gemsController.createGem)
 router.get("/getgems",gemsController.getAllGems)
 
 router.post("/postbeads",beadsController.createBeads)
-router.get("/getbeads",beadsController.getBeads)
+router.get("/getbeads",beadsController.getBead)
 
 router.post("/postdiamonds",diamondsController.createDiamond)
 router.get("/getdiamonds",diamondsController.getAllDiamonds)
@@ -48,5 +48,8 @@ router.get("/getcorals",coralsController.getCorals)
 router.post("/postcarts",cartsController.createCart)
 router.get("/getcarts",cartsController.getAllCarts)
 router.delete("/deletecarts/:id",cartsController.deleteCart)
+
+router.post("/postcheckout",checkoutController.addCheckout)
+router.get("/getcheckout",checkoutController.getCheckout)
 
 export default router;
