@@ -1,4 +1,4 @@
-// Model File (beadsModel.js)
+
 import { Schema, model } from "mongoose";
 
 const beadsSchema = new Schema({

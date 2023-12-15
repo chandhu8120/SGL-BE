@@ -42,7 +42,7 @@ const beadsController = {
 
   deleteBeads: async (req, res) => {
     try {
-      const { beadsId } = req.params; // Fix: Correct variable name
+      const { beadsId } = req.params; 
 
       const beads = await Beads.findById(beadsId);
 
