@@ -5,7 +5,11 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 
 dotenv.config();
+<<<<<<< HEAD
 //comment the data above the code github data
+=======
+
+>>>>>>> chandra
 const PORT = process.env.PORT || 4000;
 const app = express();
 
