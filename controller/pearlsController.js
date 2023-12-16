@@ -40,6 +40,24 @@ const pearlsController = {
       }
     },
   ],
+
+  deletePearls: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const pearls = await Pearls.findById(id);
+  
+      if (!pearls) {
+        return res.status(404).json({ error: 'Pearls not found' });
+      }
+  
+      await Pearls.deleteOne({ _id: id }); 
+  
+      res.status(204).json({ message: 'Pearls deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting Pearls:', error);
+      res.status(500).json({ error: 'Failed to delete Pearls', details: error.message });
+    }
+  }
 };
 
 export default pearlsController;

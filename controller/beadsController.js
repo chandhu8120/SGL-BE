@@ -42,21 +42,21 @@ const beadsController = {
 
   deleteBeads: async (req, res) => {
     try {
-      const { beadsId } = req.params; 
-
-      const beads = await Beads.findById(beadsId);
-
+      const { id } = req.params;
+      const beads = await Beads.findById(id);
+  
       if (!beads) {
-        return res.status(404).json({ error: "Beads not found" });
+        return res.status(404).json({ error: 'Beads not found' });
       }
-
-      await Beads.deleteOne({ _id: beadsId }); // Fix: Use Beads.deleteOne() instead of Cake.deleteOne()
-
-      res.status(204).send();
+  
+      await Beads.deleteOne({ _id: id }); 
+  
+      res.status(204).json({ message: 'Beads deleted successfully' });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error('Error deleting Beads:', error);
+      res.status(500).json({ error: 'Failed to delete Beads', details: error.message });
     }
-  },
+  }
 };
 
 export default beadsController;

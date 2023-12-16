@@ -16,7 +16,7 @@ const jewellaryController = {
   },
 
   createJewellary: [
-    upload.single('image'), 
+    upload.single('image'),
     async (req, res) => {
       try {
         const { name, price } = req.body;
@@ -40,6 +40,26 @@ const jewellaryController = {
       }
     }
   ],
+
+  deleteJewellary: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const jewellary = await Jewellary.findById(id);
+  
+      if (!jewellary) {
+        return res.status(404).json({ error: 'Jewellary not found' });
+      }
+  
+      await Jewellary.deleteOne({ _id: id }); 
+  
+      res.status(204).json({ message: 'Jewellary deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting jewellary:', error);
+      res.status(500).json({ error: 'Failed to delete jewellary', details: error.message });
+    }
+  }
+  
+  
 };
 
 export default jewellaryController;

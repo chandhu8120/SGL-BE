@@ -4,7 +4,6 @@ import multer from "multer";
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-
 const gemsController = {
   getAllGems: async (req, res) => {
     try {
@@ -41,5 +40,27 @@ const gemsController = {
       }
     }
   ],
-}
+
+  deleteGem: async (req, res) => {
+    try {
+      const gemId = req.params.id;
+
+      if (!gemId) {
+        return res.status(400).json({ error: 'Gem ID is required for deletion' });
+      }
+
+      const deletedGem = await Gems.findByIdAndDelete(gemId);
+
+      if (!deletedGem) {
+        return res.status(404).json({ error: 'Gem not found' });
+      }
+
+      res.status(200).json({ message: 'Gem deleted successfully', deletedGem });
+    } catch (error) {
+      console.error('Error deleting gem:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
+};
+
 export default gemsController;

@@ -1,9 +1,8 @@
-import Corals from '../model/coralsModel.js'
-import multer from "multer";
+import Corals from '../model/coralsModel.js';
+import multer from 'multer';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 
 const coralsController = {
   getCorals: async (req, res) => {
@@ -39,7 +38,26 @@ const coralsController = {
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
-    }
+    },
   ],
+
+  deleteCorals: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const corals = await Corals.findById(id);
+
+      if (!corals) {
+        return res.status(404).json({ error: 'Corals not found' });
+      }
+
+      await Corals.deleteOne({ _id: id });
+
+      res.status(204).json({ message: 'Corals deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting Corals:', error);
+      res.status(500).json({ error: 'Failed to delete Corals', details: error.message });
+    }
+  },
 };
-  export default coralsController;
+
+export default coralsController;
