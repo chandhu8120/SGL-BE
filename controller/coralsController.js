@@ -2,7 +2,7 @@ import Corals from '../model/coralsModel.js';
 import multer from 'multer';
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
+//new changes added 5:29pm
 const coralsController = {
   getCorals: async (req, res) => {
     try {
