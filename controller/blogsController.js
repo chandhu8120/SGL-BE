@@ -1,4 +1,4 @@
-import Blogs from '../model/blogsModel.js'
+import Blogs from '../model/blogsModel.js';
 import multer from 'multer';
 
 const storage = multer.memoryStorage();
@@ -40,6 +40,26 @@ const blogsController = {
       }
     },
   ],
+
+  deleteBlog: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({ error: 'Blog ID is required' });
+      }
+
+      const deletedBlog = await Blogs.findByIdAndDelete(id);
+
+      if (!deletedBlog) {
+        return res.status(404).json({ error: 'Blog not found' });
+      }
+
+      res.status(200).json(deletedBlog);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  },
 };
 
 export default blogsController;
