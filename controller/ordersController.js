@@ -72,24 +72,32 @@ const ordersController = {
     }
   },
 
-  deleteOrder: async (req, res) => {
-    try {
-      const { orderId } = req.params;
+ 
+// ...
 
-      const existingOrder = await Orders.findOne({ orderId });
+deleteOrder: async (req, res) => {
+  try {
+    const { orderId } = req.params; // Use "orderId" instead of "id"
 
-      if (!existingOrder) {
-        return res.status(404).json({ error: 'Order not found' });
-      }
-
-      await Orders.findOneAndDelete({ orderId });
-
-      res.status(204).json();
-    } catch (error) {
-      console.error('Error deleting order:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+    if (!orderId) {
+      return res.status(400).json({ error: 'delete orderId is required' });
     }
+
+    const deleteOrder = await Orders.findByIdAndDelete(orderId);
+
+    if (!deleteOrder) {
+      return res.status(404).json({ error: 'Order not found' });
+    }
+
+    res.status(200).json(deleteOrder);
+  } catch (error) {
+    console.error('Error deleting order:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
+},
+
+// ...
+
 };
 
 export default ordersController;

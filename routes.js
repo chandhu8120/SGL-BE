@@ -18,11 +18,14 @@ router.delete("/deleteinventory/:id",inventoryController.deleteInventoryItem)
 
 router.post("/postblogs", blogsController.createBlog);
 router.get("/getblogs", blogsController.getAllBlogs);
+router.delete("/deleteblogs/:id",blogsController.deleteBlog)
 
 router.post("/postorders", ordersController.createOrder);
 router.get("/getorders", ordersController.getAllOrders);
 router.put("/edit/:orderId", ordersController.editOrder);
-router.delete("/deleteorder/:id", ordersController.deleteOrder); 
+router.patch("/update",ordersController.updateOrder)
+router.delete('/delete/:orderId', ordersController.deleteOrder);
+
 router.put("/updateorder", ordersController.updateOrder);
 
 
