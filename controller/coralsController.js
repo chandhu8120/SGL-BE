@@ -19,27 +19,29 @@ const coralsController = {
     upload.single('image'),
     async (req, res) => {
       try {
-        const { name, price } = req.body;
-
+        const { name, price, weight, colour, subtype, units, value, shape } = req.body;
+  
         if (!req.file) {
           return res.status(400).json({ error: 'Image file is required' });
         }
-
+  
         const image = req.file.buffer.toString('base64');
-
-        if (!name || !price) {
-          return res.status(400).json({ error: 'Corals name and price are required' });
+  
+        if (!name || !price || !weight || !colour) {
+          return res.status(400).json({ error: 'Corals name, price, weight, and colour are required' });
         }
-
-        const corals = new Corals({ name, price, image });
+  
+        // Include all required fields from your schema
+        const corals = new Corals({ name, price, weight, colour, image, subtype, units, value, shape });
         const savedcorals = await corals.save();
-
+  
         res.status(201).json(savedcorals);
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
     },
   ],
+  
 
   deleteCorals: async (req, res) => {
     try {

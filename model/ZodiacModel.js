@@ -1,7 +1,7 @@
-// beadsModel.js
-import { Schema, model } from "mongoose";
+// ZodiacModel.js
+import { Schema, model } from 'mongoose';
 
-const beadsSchema = new Schema({
+const zodiacSchema = Schema({
   image: { type: String, required: true },
   name: { type: String, required: true },
   price: { type: Number, required: true },
@@ -13,6 +13,6 @@ const beadsSchema = new Schema({
   shape: { type: String, required: true },
 });
 
-const Beads = model("Beads", beadsSchema);
+const Zodiac = model('Zodiac', zodiacSchema);
 
-export default Beads;
+export default Zodiac;

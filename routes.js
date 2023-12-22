@@ -9,6 +9,7 @@ import coralsController from './controller/coralsController.js';
 import cartsController from './controller/cartsController.js';
 import beadsController from './controller/beadsController.js';
 import blogsController from './controller/blogsController.js';
+import zodiacController from './controller/zodiacController.js';
 
 
 const router = express.Router();
@@ -22,18 +23,18 @@ router.delete("/deleteblogs/:id",blogsController.deleteBlog)
 
 router.post("/postorders", ordersController.createOrder);
 router.get("/getorders", ordersController.getAllOrders);
-router.put("/edit/:orderId", ordersController.editOrder);
-router.patch("/update",ordersController.updateOrder)
+router.put("/update/:orderId", ordersController.updateOrder);
+router.patch("/update/:id", ordersController.updateOrder);
 router.delete('/delete/:orderId', ordersController.deleteOrder);
 
-router.put("/updateorder", ordersController.updateOrder);
+
 
 
 router.post("/postgems",gemsController.createGem)
 router.get("/getgems",gemsController.getAllGems)
 router.delete("/deletegems/:id",gemsController.deleteGem)
 
-router.post("/postbeads",beadsController.createBeads)
+router.post("/postbeads", beadsController.createBeads);
 router.get("/getbeads",beadsController.getBead)
 router.delete("/deletebeads/:id", beadsController.deleteBeads);
 
@@ -58,5 +59,9 @@ router.post("/postcarts",cartsController.createCart)
 router.get("/getcarts",cartsController.getAllCarts)
 router.delete("/deletecarts/:id",cartsController.deleteCart)
 
+
+router.post('/postzodiac', zodiacController.createZodiac);
+router.get("/getzodiac",zodiacController.getZodiac)
+router.delete("/deletezodiac/:id",zodiacController.deleteZodiac)
 
 export default router;
