@@ -25,59 +25,55 @@ const ordersController = {
   getAllOrders: async (req, res) => {
     try {
       const allOrders = await Orders.find();
-      res.status(200).json(allOrders);
+  
+      // Format the date field to "yyyy-MM-dd"
+      const formattedOrders = allOrders.map(order => ({
+        ...order.toObject(),
+        date: new Date(order.date).toLocaleDateString('en-GB'), // Adjust the locale as needed
+      }));
+  
+      res.status(200).json(formattedOrders);
     } catch (error) {
       console.error('Error getting all orders:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
+  
+  
 
+ 
   editOrder: async (req, res) => {
     try {
       const { orderId } = req.params;
-      const updatedOrder = req.body;
-
       const existingOrder = await Orders.findOne({ orderId });
 
       if (!existingOrder) {
         return res.status(404).json({ error: 'Order not found' });
       }
 
-      const editedOrder = await Orders.findOneAndUpdate({ orderId }, updatedOrder, { new: true });
-
-      res.status(200).json(editedOrder);
+      res.status(200).json(existingOrder);
     } catch (error) {
       console.error('Error editing order:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
-
   updateOrder: async (req, res) => {
     try {
       const { orderId } = req.params;
-      const updatedOrder = req.body;
-
-      const existingOrder = await Orders.findOne({ orderId });
-
-      if (!existingOrder) {
-        return res.status(404).json({ error: 'Order not found' });
-      }
-
-      const updatedOrderResult = await Orders.findOneAndUpdate({ orderId }, updatedOrder, { new: true });
-
-      res.status(200).json(updatedOrderResult);
+      console.log('Received Order ID for Update:', orderId);
+      // ... (rest of the code)
     } catch (error) {
       console.error('Error updating order:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     }
   },
+  
 
- 
-// ...
+
 
 deleteOrder: async (req, res) => {
   try {
-    const { orderId } = req.params; // Use "orderId" instead of "id"
+    const { orderId } = req.params; 
 
     if (!orderId) {
       return res.status(400).json({ error: 'delete orderId is required' });
@@ -95,8 +91,6 @@ deleteOrder: async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 },
-
-// ...
 
 };
 
