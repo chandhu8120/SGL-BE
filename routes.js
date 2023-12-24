@@ -43,9 +43,9 @@ router.post("/postdiamonds",diamondsController.createDiamond)
 router.get("/getdiamonds",diamondsController.getAllDiamonds)
 router.delete("/deletediamonds/:id",diamondsController.deleteDiamond)
 
-router.post("/postjewellary",jewellaryController.createJewellary)
-router.get("/getjewellary",jewellaryController.getAllJewellary)
-router.delete("/deletejewellary/:id",jewellaryController.deleteJewellary)
+router.post("/postjewelry",jewellaryController.createJewellary)
+router.get("/getjewelry",jewellaryController.getAllJewellary)
+router.delete("/deletejewelry/:id",jewellaryController.deleteJewellary)
 
 router.post("/postpearls",pearlsController.createPearls)
 router.get("/getpearls",pearlsController.getAllPearls)
@@ -60,8 +60,8 @@ router.get("/getcarts",cartsController.getAllCarts)
 router.delete("/deletecarts/:id",cartsController.deleteCart)
 
 
-router.post('/postzodiac', zodiacController.createZodiac);
-router.get("/getzodiac",zodiacController.getZodiac)
-router.delete("/deletezodiac/:id",zodiacController.deleteZodiac)
+router.post('/postzodiacstones', zodiacController.createZodiac);
+router.get("/getzodiacstones",zodiacController.getZodiac)
+router.delete("/deletezodiacstones/:id",zodiacController.deleteZodiac)
 
 export default router;
