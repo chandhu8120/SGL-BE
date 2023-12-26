@@ -1,4 +1,4 @@
-// import Diamonds from '../model/diamondsModel.js'
+
 import Diamonds from '../model/diamondsModel.js';
 
 import multer from 'multer';
