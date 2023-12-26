@@ -1,4 +1,6 @@
-import Diamonds from '../model/diamondsModel..js'
+// import Diamonds from '../model/diamondsModel.js'
+import Diamonds from '../model/diamondsModel.js';
+
 import multer from 'multer';
 
 const storage = multer.memoryStorage();
@@ -19,7 +21,7 @@ const diamondsController = {
     upload.single('image'),
     async (req, res) => {
       try {
-        const { name, price, product, carat, fluorescence, shape } = req.body;
+        const { name, price, weight, colour, subtype, units, value, shape } = req.body;
 
         if (!req.file) {
           return res.status(400).json({ error: 'Image file is required' });
@@ -27,11 +29,11 @@ const diamondsController = {
 
         const image = req.file.buffer.toString('base64');
 
-        if (!product || !name) {
-          return res.status(400).json({ error: 'Name and product are required' });
+        if (!name || !price || !weight || !colour || !subtype || !units || !value || !shape) {
+          return res.status(400).json({ error: 'All fields are required' });
         }
 
-        const diamond = new Diamonds({ name, price, product, carat, fluorescence, shape, image });
+        const diamond = new Diamonds({ name, price, weight, colour, subtype, units, value, shape, image });
         const savedDiamond = await diamond.save();
 
         res.status(201).json(savedDiamond);
