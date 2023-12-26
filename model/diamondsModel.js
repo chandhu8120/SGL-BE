@@ -4,10 +4,12 @@ const diamondsShema = Schema({
   image: { type: String, required: true },
   name: { type: String, required: true },
   price: { type: Number, required: true },
-  product:{type:String,required:true},
-  carat:{type:String,required:true},
-  fluorescence:{type:String,required:true},
-  shape:{type:String,required:true}
+  weight: { type: Number, required: true },
+  colour: { type: String, required: true },
+  subtype: { type: String, required: true },
+  units: { type: String, required: true },
+  value: { type: String, required: true },
+  shape: { type: String, required: true },
 });
 
 const Diamonds = model("Diamonds", diamondsShema);
